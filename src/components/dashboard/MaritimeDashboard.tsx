@@ -12,6 +12,7 @@ import { Loader2, Users, Ship, Wrench, FileText, Clock, MapPin, Anchor } from 'l
 import maritimeHero from '@/assets/maritime-hero.jpg';
 import maritimeIcon from '@/assets/maritime-icon.png';
 import { siemensEquipmentData, siemensSystemsData, getTiposSistema, getTotalEquipamentos, SystemData } from '@/data/siemensEquipment';
+import { modecEquipmentData, modecSystemsData, getTiposSistemaModec, getTotalEquipamentosModec } from '@/data/modecEquipment';
 type ViewLevel = 'overview' | 'cliente' | 'sistema' | 'sistemaDetail';
 
 interface NavigationState {
@@ -92,9 +93,14 @@ export const MaritimeDashboard = () => {
     );
   }
 
-  // Calcular métricas dos dados da Siemens
-  const totalSistemas = siemensSystemsData.length;
-  const totalEquipamentos = getTotalEquipamentos();
+  // Calcular métricas totais
+  const totalSistemasSiemens = siemensSystemsData.length;
+  const totalEquipamentosSiemens = getTotalEquipamentos();
+  const totalSistemasModec = modecSystemsData.length;
+  const totalEquipamentosModec = getTotalEquipamentosModec();
+  
+  const totalSistemas = totalSistemasSiemens + totalSistemasModec;
+  const totalEquipamentos = totalEquipamentosSiemens + totalEquipamentosModec;
 
   const getBreadcrumbItems = () => {
     const items = [];
@@ -129,8 +135,6 @@ export const MaritimeDashboard = () => {
   };
 
   const renderOverview = () => {
-    const clientes = getClientes();
-    
     return (
       <div className="space-y-6">
         <DashboardMetrics totalSistemas={totalSistemas} totalEquipamentos={totalEquipamentos} />
@@ -139,7 +143,7 @@ export const MaritimeDashboard = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Users className="h-5 w-5 text-primary" />
-                Clientes (1)
+                Clientes (2)
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -148,13 +152,26 @@ export const MaritimeDashboard = () => {
                   key="Siemens"
                   title="Siemens"
                   icon={<Users className="h-5 w-5" />}
-                  badge={`${totalSistemas} sistemas`}
+                  badge={`${totalSistemasSiemens} sistemas`}
                   onClick={() => handleNavigationChange({ level: 'cliente', selectedCliente: 'Siemens' })}
                   metrics={[
-                    { label: 'Sistemas', value: totalSistemas },
-                    { label: 'Equipamentos', value: totalEquipamentos }
+                    { label: 'Sistemas', value: totalSistemasSiemens },
+                    { label: 'Equipamentos', value: totalEquipamentosSiemens }
                   ]}
                   gradient="bg-gradient-ocean"
+                />
+                <InteractiveCard
+                  key="Modec"
+                  title="Modec"
+                  subtitle="FPSO Bacalhau"
+                  icon={<Ship className="h-5 w-5" />}
+                  badge={`${totalSistemasModec} sistemas`}
+                  onClick={() => handleNavigationChange({ level: 'cliente', selectedCliente: 'Modec' })}
+                  metrics={[
+                    { label: 'Sistemas', value: totalSistemasModec },
+                    { label: 'Equipamentos', value: totalEquipamentosModec }
+                  ]}
+                  gradient="bg-gradient-wave"
                 />
               </div>
             </CardContent>
@@ -166,18 +183,34 @@ export const MaritimeDashboard = () => {
   const renderCliente = () => {
     if (!navigation.selectedCliente) return null;
 
-    // Siemens: listar Sistemas diretamente
-    const filteredSistemas = siemensSystemsData.filter((sistema) =>
-      sistema.nome.toLowerCase().includes(searchTerms.sistemas.toLowerCase()) ||
-      sistema.tipo.toLowerCase().includes(searchTerms.sistemas.toLowerCase())
-    );
+    let filteredSistemas;
+    let totalSistemasCliente;
+    let clienteTitle;
+
+    if (navigation.selectedCliente === 'Siemens') {
+      filteredSistemas = siemensSystemsData.filter((sistema) =>
+        sistema.nome.toLowerCase().includes(searchTerms.sistemas.toLowerCase()) ||
+        sistema.tipo.toLowerCase().includes(searchTerms.sistemas.toLowerCase())
+      );
+      totalSistemasCliente = siemensSystemsData.length;
+      clienteTitle = "Sistemas - Siemens";
+    } else if (navigation.selectedCliente === 'Modec') {
+      filteredSistemas = modecSystemsData.filter((sistema) =>
+        sistema.nome.toLowerCase().includes(searchTerms.sistemas.toLowerCase()) ||
+        sistema.tipo.toLowerCase().includes(searchTerms.sistemas.toLowerCase())
+      );
+      totalSistemasCliente = modecSystemsData.length;
+      clienteTitle = "Sistemas - Modec (FPSO Bacalhau)";
+    } else {
+      return null;
+    }
 
     return (
       <Card className="shadow-card border-0">
         <CardHeader className="space-y-4">
           <CardTitle className="flex items-center gap-2">
             <Wrench className="h-5 w-5 text-primary" />
-            Sistemas - Siemens ({filteredSistemas.length}/{siemensSystemsData.length})
+            {clienteTitle} ({filteredSistemas.length}/{totalSistemasCliente})
           </CardTitle>
           <SearchBar
             placeholder="Pesquisar por sistema..."
@@ -189,15 +222,15 @@ export const MaritimeDashboard = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredSistemas.map((sistema) => (
               <InteractiveCard
-                key={sistema.numero}
+                key={`${navigation.selectedCliente}-${sistema.numero}`}
                 title={`Sistema ${sistema.numero}`}
                 subtitle={sistema.nome}
-                icon={<Wrench className="h-5 w-5" />}
+                icon={navigation.selectedCliente === 'Modec' ? <Anchor className="h-5 w-5" /> : <Wrench className="h-5 w-5" />}
                 badge={sistema.tipo}
                 onClick={() =>
                   handleNavigationChange({
                     level: 'sistemaDetail',
-                    selectedCliente: 'Siemens',
+                    selectedCliente: navigation.selectedCliente,
                     selectedSistema: sistema.nome,
                     selectedSystemData: sistema,
                   })
@@ -206,7 +239,7 @@ export const MaritimeDashboard = () => {
                   { label: 'Local', value: sistema.local },
                   { label: 'Equipamentos', value: sistema.equipamentos.length },
                 ]}
-                gradient="bg-gradient-wave"
+                gradient={navigation.selectedCliente === 'Modec' ? "bg-gradient-ocean" : "bg-gradient-wave"}
               />
             ))}
           </div>
