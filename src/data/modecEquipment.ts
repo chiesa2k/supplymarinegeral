@@ -9,6 +9,17 @@ export interface Equipment {
   tipo?: string;
   local?: string;
   sistema?: number;
+  condensacao?: string;
+  numeroSerie?: string;
+  valvulaSolenoide?: string;
+  valvulaExpansao?: string;
+  compressor?: string;
+  unidadeComp?: string;
+  refrigerante?: string;
+  alimentacao?: string;
+  ventilador?: string;
+  vazaoVentilador?: string;
+  filtro?: string;
 }
 
 export interface SystemData {
@@ -32,21 +43,45 @@ export const modecSystemsData: SystemData[] = [
         description: "Unidade Condensadora Alpha",
         fabricante: "Glory Bright",
         capacidade: "620 kW",
-        tipo: "Unidade Condensadora"
+        tipo: "Unidade Condensadora",
+        condensacao: "Água",
+        modelo: "CB.CS.3521140/2P.D.K.A-NR13",
+        numeroSerie: "4500089760",
+        valvulaSolenoide: "Emerson/200RB 2T3",
+        compressor: "Bitzer/CSH7563-80Y",
+        unidadeComp: "02 Unidade",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       },
       {
         code: "77GB001B",
         description: "Unidade Condensadora Bravo",
         fabricante: "Glory Bright",
         capacidade: "620 kW",
-        tipo: "Unidade Condensadora"
+        tipo: "Unidade Condensadora",
+        condensacao: "Água",
+        modelo: "N/I",
+        numeroSerie: "4500089760",
+        valvulaSolenoide: "Emerson/200RB 2T3",
+        compressor: "Bitzer/CSH7563-809",
+        unidadeComp: "02 Unidade",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       },
       {
         code: "77GB001C",
         description: "Unidade Condensadora Charlie",
         fabricante: "Glory Bright",
         capacidade: "620 kW",
-        tipo: "Unidade Condensadora"
+        tipo: "Unidade Condensadora",
+        condensacao: "Água",
+        modelo: "CB.CS.3521140/2P.D.K.A-NR13",
+        numeroSerie: "4500089760",
+        valvulaSolenoide: "Emerson/200RB 2T3",
+        compressor: "Bitzer/CSH7563-80Y",
+        unidadeComp: "02 Unidade",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       },
       {
         code: "77GA001A",

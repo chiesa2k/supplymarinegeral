@@ -9,6 +9,18 @@ export interface Equipment {
   tipo?: string;
   local?: string;
   sistema?: number;
+  // Additional technical details for comprehensive equipment info
+  condensacao?: string;
+  numeroSerie?: string;
+  valvulaSolenoide?: string;
+  valvulaExpansao?: string;
+  compressor?: string;
+  unidadeComp?: string;
+  refrigerante?: string;
+  alimentacao?: string;
+  ventilador?: string;
+  vazaoVentilador?: string;
+  filtro?: string;
 }
 
 export interface SystemData {

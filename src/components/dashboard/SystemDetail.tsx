@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { SystemData } from '@/data/siemensEquipment';
+import { Equipment } from '@/data/modecEquipment';
 import { Wrench, MapPin, Factory, Zap, Hash } from 'lucide-react';
 
 interface SystemDetailProps {
@@ -86,6 +87,86 @@ export const SystemDetail = ({ system }: SystemDetailProps) => {
                           <p className="text-xs text-muted-foreground">Capacidade</p>
                           <p className="font-medium">{equipamento.capacidade}</p>
                         </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Detalhes Técnicos Expandidos */}
+                  <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {equipamento.condensacao && (
+                      <div className="bg-background/80 rounded-md p-3 border">
+                        <p className="text-xs text-muted-foreground mb-1">Condensação</p>
+                        <p className="font-medium text-sm">{equipamento.condensacao}</p>
+                      </div>
+                    )}
+                    
+                    {equipamento.numeroSerie && (
+                      <div className="bg-background/80 rounded-md p-3 border">
+                        <p className="text-xs text-muted-foreground mb-1">Nº Série</p>
+                        <p className="font-medium text-sm">{equipamento.numeroSerie}</p>
+                      </div>
+                    )}
+                    
+                    {equipamento.refrigerante && (
+                      <div className="bg-background/80 rounded-md p-3 border">
+                        <p className="text-xs text-muted-foreground mb-1">Refrigerante</p>
+                        <p className="font-medium text-sm">{equipamento.refrigerante}</p>
+                      </div>
+                    )}
+                    
+                    {equipamento.alimentacao && (
+                      <div className="bg-background/80 rounded-md p-3 border">
+                        <p className="text-xs text-muted-foreground mb-1">Alimentação</p>
+                        <p className="font-medium text-sm">{equipamento.alimentacao}</p>
+                      </div>
+                    )}
+                    
+                    {equipamento.compressor && (
+                      <div className="bg-background/80 rounded-md p-3 border">
+                        <p className="text-xs text-muted-foreground mb-1">Compressor</p>
+                        <p className="font-medium text-sm">{equipamento.compressor}</p>
+                      </div>
+                    )}
+                    
+                    {equipamento.valvulaSolenoide && (
+                      <div className="bg-background/80 rounded-md p-3 border">
+                        <p className="text-xs text-muted-foreground mb-1">Válvula Solenoide</p>
+                        <p className="font-medium text-sm">{equipamento.valvulaSolenoide}</p>
+                      </div>
+                    )}
+                    
+                    {equipamento.valvulaExpansao && (
+                      <div className="bg-background/80 rounded-md p-3 border">
+                        <p className="text-xs text-muted-foreground mb-1">Válvula de Expansão</p>
+                        <p className="font-medium text-sm">{equipamento.valvulaExpansao}</p>
+                      </div>
+                    )}
+                    
+                    {equipamento.ventilador && (
+                      <div className="bg-background/80 rounded-md p-3 border">
+                        <p className="text-xs text-muted-foreground mb-1">Ventilador</p>
+                        <p className="font-medium text-sm">{equipamento.ventilador}</p>
+                      </div>
+                    )}
+                    
+                    {equipamento.vazaoVentilador && (
+                      <div className="bg-background/80 rounded-md p-3 border">
+                        <p className="text-xs text-muted-foreground mb-1">Vazão Ventilador</p>
+                        <p className="font-medium text-sm">{equipamento.vazaoVentilador}</p>
+                      </div>
+                    )}
+                    
+                    {equipamento.filtro && (
+                      <div className="bg-background/80 rounded-md p-3 border">
+                        <p className="text-xs text-muted-foreground mb-1">Filtro</p>
+                        <p className="font-medium text-sm">{equipamento.filtro}</p>
+                      </div>
+                    )}
+                    
+                    {equipamento.unidadeComp && (
+                      <div className="bg-background/80 rounded-md p-3 border">
+                        <p className="text-xs text-muted-foreground mb-1">Unidade Comp.</p>
+                        <p className="font-medium text-sm">{equipamento.unidadeComp}</p>
                       </div>
                     )}
                   </div>
