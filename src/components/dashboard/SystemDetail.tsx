@@ -60,6 +60,14 @@ export const SystemDetail = ({ system }: SystemDetailProps) => {
                   </div>
                   
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                    <div className="flex items-center gap-2">
+                      <Hash className="h-4 w-4 text-primary" />
+                      <div>
+                        <p className="text-xs text-muted-foreground">TAG</p>
+                        <p className="font-medium">{equipamento.code}</p>
+                      </div>
+                    </div>
+                    
                     {equipamento.fabricante && (
                       <div className="flex items-center gap-2">
                         <Factory className="h-4 w-4 text-primary" />
