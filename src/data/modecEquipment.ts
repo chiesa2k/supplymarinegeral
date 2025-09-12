@@ -88,14 +88,30 @@ export const modecSystemsData: SystemData[] = [
         description: "Unidade Evaporadora Alpha (AHU)",
         fabricante: "Glory Bright",
         capacidade: "476 kW",
-        tipo: "Unidade Evaporadora (AHU)"
+        tipo: "Unidade Evaporadora (AHU)",
+        condensacao: "Ar",
+        modelo: "AAHM47.3N-65",
+        numeroSerie: "4500089760",
+        valvulaExpansao: "Emerson/EX7",
+        ventilador: "Aeolus",
+        vazaoVentilador: "47,276 m³/hr",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       },
       {
         code: "77GA001B",
         description: "Unidade Evaporadora Bravo (AHU)",
         fabricante: "Glory Bright",
         capacidade: "476 kW",
-        tipo: "Unidade Evaporadora (AHU)"
+        tipo: "Unidade Evaporadora (AHU)",
+        condensacao: "Ar",
+        modelo: "AAHM47.3N-65",
+        numeroSerie: "4500089760",
+        valvulaExpansao: "EMERSON/EX7",
+        ventilador: "AEOLUS",
+        vazaoVentilador: "47,276 m³/hr",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       }
     ]
   },
@@ -112,14 +128,30 @@ export const modecSystemsData: SystemData[] = [
         description: "Rooftop Alpha",
         fabricante: "Cadar Marine",
         capacidade: "658 kW",
-        tipo: "Rooftop"
+        tipo: "Rooftop",
+        condensacao: "Ar",
+        modelo: "CIKR(F)-500",
+        numeroSerie: "4500104378",
+        valvulaSolenoide: "Danfoss/F0715",
+        valvulaExpansao: "Danfoss / DTI 17ATEX 0065x",
+        compressor: "Bitzer/CSH7573-90Y-40P",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       },
       {
         code: "77GB500B",
         description: "Rooftop Bravo",
         fabricante: "Cadar Marine",
         capacidade: "658 kW",
-        tipo: "Rooftop"
+        tipo: "Rooftop",
+        condensacao: "Ar",
+        modelo: "CJKR(F)-500",
+        numeroSerie: "4500104378",
+        valvulaSolenoide: "Danfoss/F0715",
+        valvulaExpansao: "Danfoss/DTI 17ATEX 0065x",
+        compressor: "Bitzer/CSH7573-90Y-40P",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       }
     ]
   },
@@ -136,14 +168,30 @@ export const modecSystemsData: SystemData[] = [
         description: "Rooftop Alpha",
         fabricante: "Friend Thermal",
         capacidade: "482 kW",
-        tipo: "Rooftop"
+        tipo: "Rooftop",
+        condensacao: "Ar",
+        modelo: "48500LNQ-1~6",
+        numeroSerie: "4500104378",
+        valvulaSolenoide: "Danfoss/F0715",
+        valvulaExpansao: "Danfoss/DTI 17ATEX 0065x",
+        compressor: "Bitzer/CSH7573-90Y-40P",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       },
       {
         code: "77GJ500B",
         description: "Rooftop Bravo",
         fabricante: "Friend Thermal",
         capacidade: "482 kW",
-        tipo: "Rooftop"
+        tipo: "Rooftop",
+        condensacao: "Ar",
+        modelo: "48500LNQ-1~6",
+        numeroSerie: "4500104378",
+        valvulaSolenoide: "Danfoss/F0715",
+        valvulaExpansao: "Danfoss/DTI 17ATEX 0065x",
+        compressor: "Bitzer/CSH7573-90Y-40P",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       }
     ]
   },
@@ -160,14 +208,28 @@ export const modecSystemsData: SystemData[] = [
         description: "Self Contained Alpha",
         fabricante: "Glory Bright",
         capacidade: "107.5 kW",
-        tipo: "Self Contained"
+        tipo: "Self Contained",
+        condensacao: "Ar",
+        modelo: "GAL 81",
+        numeroSerie: "N/I",
+        valvulaExpansao: "Emerson/TRE+30HCA",
+        compressor: "Copeland/ZR310KCE-TWD-522",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       },
       {
         code: "77GB400B",
         description: "Self Contained Bravo",
         fabricante: "Glory Bright",
         capacidade: "107.5 kW",
-        tipo: "Self Contained"
+        tipo: "Self Contained",
+        condensacao: "Ar",
+        modelo: "GAL 81",
+        numeroSerie: "N/I",
+        valvulaExpansao: "Emerson/TRE+30HCA",
+        compressor: "Copeland/ZR310KCE-TWD-522",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       }
     ]
   },
@@ -184,7 +246,14 @@ export const modecSystemsData: SystemData[] = [
         description: "Self Contained",
         fabricante: "Glory Bright",
         capacidade: "86.6 kW",
-        tipo: "Self Contained"
+        tipo: "Self Contained",
+        condensacao: "Ar",
+        modelo: "GAL66",
+        numeroSerie: "4500098260",
+        valvulaExpansao: "Emerson/C1937",
+        compressor: "Copeland/ZR310KCE-TWD-522",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       }
     ]
   },
@@ -201,14 +270,30 @@ export const modecSystemsData: SystemData[] = [
         description: "Self Contained Alpha",
         fabricante: "Glory Bright",
         capacidade: "104.50 kW",
-        tipo: "Self Contained"
+        tipo: "Self Contained",
+        condensacao: "Ar",
+        modelo: "GAL76",
+        numeroSerie: "4500089760",
+        filtro: "G2",
+        valvulaExpansao: "TER22",
+        compressor: "Copeland/ZR310KCE-TWD",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       },
       {
         code: "77GB005B",
         description: "Self Contained Bravo",
         fabricante: "Glory Bright",
         capacidade: "104.50 kW",
-        tipo: "Self Contained"
+        tipo: "Self Contained",
+        condensacao: "Ar",
+        modelo: "GAL76",
+        numeroSerie: "4500089760",
+        filtro: "G2",
+        valvulaExpansao: "TER22",
+        compressor: "Copeland/ZR310KCE-TWD",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       }
     ]
   },
@@ -225,14 +310,30 @@ export const modecSystemsData: SystemData[] = [
         description: "Self Contained Alpha",
         fabricante: "Glory Bright",
         capacidade: "88.40 kW",
-        tipo: "Self Contained"
+        tipo: "Self Contained",
+        condensacao: "Ar",
+        modelo: "GAL69",
+        numeroSerie: "4500089760",
+        filtro: "G2",
+        valvulaExpansao: "TER22",
+        compressor: "Copeland/ZR250KCE-TWD",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       },
       {
         code: "77GB010B",
         description: "Self Contained Bravo",
         fabricante: "Glory Bright",
         capacidade: "88.40 kW",
-        tipo: "Self Contained"
+        tipo: "Self Contained",
+        condensacao: "Ar",
+        modelo: "GAL69",
+        numeroSerie: "4500089760",
+        filtro: "G2",
+        valvulaExpansao: "TER22",
+        compressor: "Copeland/ZR250KCE-TWD",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       }
     ]
   },
@@ -249,7 +350,15 @@ export const modecSystemsData: SystemData[] = [
         description: "Self Contained",
         fabricante: "Glory Bright",
         capacidade: "72 kW",
-        tipo: "Self Contained"
+        tipo: "Self Contained",
+        condensacao: "Ar",
+        modelo: "GAL72",
+        numeroSerie: "4500089760",
+        filtro: "G2",
+        valvulaExpansao: "TER22",
+        compressor: "Copeland/ZR250KCE-TWD",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       }
     ]
   },
@@ -266,7 +375,15 @@ export const modecSystemsData: SystemData[] = [
         description: "Self Contained",
         fabricante: "Glory Bright",
         capacidade: "44.7 kW",
-        tipo: "Self Contained"
+        tipo: "Self Contained",
+        condensacao: "Água",
+        modelo: "GLW35",
+        numeroSerie: "4500089760",
+        filtro: "G2",
+        valvulaExpansao: "TRAES 10 NC",
+        compressor: "Copeland/ZR125KCE-TFD",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       }
     ]
   },
@@ -283,14 +400,30 @@ export const modecSystemsData: SystemData[] = [
         description: "Self Contained Alpha",
         fabricante: "Glory Bright",
         capacidade: "53 kW",
-        tipo: "Self Contained"
+        tipo: "Self Contained",
+        condensacao: "Água",
+        modelo: "GWL53",
+        numeroSerie: "4500089760",
+        filtro: "G4",
+        valvulaExpansao: "TRAES 8 NC",
+        compressor: "Copeland/ZR94KCE-TFD",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       },
       {
         code: "77GB009B",
         description: "Self Contained Bravo",
         fabricante: "Glory Bright",
         capacidade: "53 kW",
-        tipo: "Self Contained"
+        tipo: "Self Contained",
+        condensacao: "Água",
+        modelo: "GWL53",
+        numeroSerie: "4500089760",
+        filtro: "G4",
+        valvulaExpansao: "TRAES 8 NC",
+        compressor: "Copeland/ZR94KCE-TFD",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       }
     ]
   },
@@ -307,14 +440,30 @@ export const modecSystemsData: SystemData[] = [
         description: "Self Contained Alpha",
         fabricante: "Glory Bright",
         capacidade: "30 kW",
-        tipo: "Self Contained"
+        tipo: "Self Contained",
+        condensacao: "Ar",
+        modelo: "GAL30",
+        numeroSerie: "N/I",
+        filtro: "G2",
+        valvulaExpansao: "TRAES 10 NC",
+        compressor: "Copeland/ZR108KCE-TFD",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       },
       {
         code: "77GB003B",
         description: "Self Contained Bravo",
         fabricante: "Glory Bright",
         capacidade: "30 kW",
-        tipo: "Self Contained"
+        tipo: "Self Contained",
+        condensacao: "Ar",
+        modelo: "GAL30",
+        numeroSerie: "N/I",
+        filtro: "G2",
+        valvulaExpansao: "TRAES 10 NC",
+        compressor: "Copeland/ZR108KCE-TFD",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       }
     ]
   },
@@ -331,7 +480,15 @@ export const modecSystemsData: SystemData[] = [
         description: "Self Contained",
         fabricante: "Glory Bright",
         capacidade: "32 kW",
-        tipo: "Self Contained"
+        tipo: "Self Contained",
+        condensacao: "Ar",
+        modelo: "GAL32",
+        numeroSerie: "N/I",
+        filtro: "G2",
+        valvulaExpansao: "TRAES 10 NC",
+        compressor: "Copeland/ZR125KCE-TFD",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       }
     ]
   },
@@ -348,7 +505,15 @@ export const modecSystemsData: SystemData[] = [
         description: "Self Contained",
         fabricante: "Glory Bright",
         capacidade: "12 kW",
-        tipo: "Self Contained"
+        tipo: "Self Contained",
+        condensacao: "Ar",
+        modelo: "GAL12",
+        numeroSerie: "N/I",
+        filtro: "G2",
+        valvulaExpansao: "BAE4 NW100",
+        compressor: "Copeland/ZB26KCE-TFD",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       }
     ]
   },
@@ -365,14 +530,30 @@ export const modecSystemsData: SystemData[] = [
         description: "Self Contained Alpha",
         fabricante: "Glory Bright",
         capacidade: "9 kW",
-        tipo: "Self Contained"
+        tipo: "Self Contained",
+        condensacao: "Ar",
+        modelo: "GAL9",
+        numeroSerie: "N/I",
+        filtro: "G2",
+        valvulaExpansao: "BAE3 NW100",
+        compressor: "Copeland/ZB21KCE-TFD",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       },
       {
         code: "77GB002B",
         description: "Self Contained Bravo",
         fabricante: "Glory Bright",
         capacidade: "9 kW",
-        tipo: "Self Contained"
+        tipo: "Self Contained",
+        condensacao: "Ar",
+        modelo: "GAL9",
+        numeroSerie: "N/I",
+        filtro: "G2",
+        valvulaExpansao: "BAE3 NW100",
+        compressor: "Copeland/ZB21KCE-TFD",
+        refrigerante: "R407C",
+        alimentacao: "440V-3F-60Hz"
       }
     ]
   },
@@ -389,42 +570,60 @@ export const modecSystemsData: SystemData[] = [
         description: "Unidade Condensadora Alpha",
         fabricante: "Rapid Marine",
         capacidade: "18 kW",
-        tipo: "Unidade Condensadora"
+        tipo: "Unidade Condensadora",
+        numeroSerie: "N/I",
+        compressor: "Bitzer/4HE-18Y-40P",
+        refrigerante: "R407C"
       },
       {
         code: "97GB701B",
         description: "Unidade Condensadora Bravo",
         fabricante: "Rapid Marine",
         capacidade: "18 kW",
-        tipo: "Unidade Condensadora"
+        tipo: "Unidade Condensadora",
+        numeroSerie: "N/I",
+        compressor: "Bitzer/4HE-18Y-40P",
+        refrigerante: "R407C"
       },
       {
         code: "97GB703",
         description: "Forçador de Ar | Carne",
         fabricante: "Walter Roller",
         capacidade: "5.5 kW",
-        tipo: "Forçador de Ar"
+        tipo: "Forçador de Ar",
+        modelo: "FAVT 614",
+        ventilador: "Walter Roller/S4E300-AR26-85",
+        refrigerante: "R407C"
       },
       {
         code: "97GB704",
         description: "Forçador de Ar | Peixe",
         fabricante: "Walter Roller",
         capacidade: "4.1 kW",
-        tipo: "Forçador de Ar"
+        tipo: "Forçador de Ar",
+        modelo: "FAVT 613",
+        ventilador: "Walter Roller/S4E300-AR26-85",
+        refrigerante: "R407C"
       },
       {
         code: "97GB706",
         description: "Forçador de Ar | Laticínios",
         fabricante: "Walter Roller",
         capacidade: "1.97 kW",
-        tipo: "Forçador de Ar"
+        tipo: "Forçador de Ar",
+        modelo: "FAVT 611",
+        ventilador: "Walter Roller/S4E300-AR26-85",
+        refrigerante: "R407C"
       },
       {
         code: "97GB705",
         description: "Forçador de Ar | Vegetais",
         fabricante: "Walter Roller",
         capacidade: "4.0 kW",
-        tipo: "Forçador de Ar"
+        tipo: "Forçador de Ar",
+        modelo: "FAVT 612",
+        ventilador: "Walter Roller/S4E300-AR26-85",
+        refrigerante: "R407C"
       }
     ]
   }
