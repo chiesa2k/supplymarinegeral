@@ -280,7 +280,7 @@ export const MaritimeDashboard = () => {
         <div className="mb-8">
           <div className="text-center mb-6">
             <div className="flex items-center justify-center mb-4">
-              <img src="/lovable-uploads/726240f1-15e2-4b33-9216-5695f97f28dd.png" alt="Supply Marine" className="h-20 max-w-full object-contain" />
+              <img src="/assets/supply-marine-hvac-logo.png" alt="Supply Marine" className="h-20 max-w-full object-contain" />
             </div>
           </div>
           
