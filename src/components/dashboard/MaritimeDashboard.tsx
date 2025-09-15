@@ -8,8 +8,7 @@ import { SystemDetail } from './SystemDetail';
 import { SearchBar } from '@/components/ui/search-bar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Loader2, Users, Ship, Wrench, FileText, Clock, MapPin, Anchor, Settings } from 'lucide-react';
+import { Loader2, Users, Ship, Wrench, FileText, Clock, MapPin, Anchor } from 'lucide-react';
 import maritimeHero from '@/assets/maritime-hero.jpg';
 import maritimeIcon from '@/assets/maritime-icon.png';
 import { siemensEquipmentData, siemensSystemsData, getTiposSistema, getTotalEquipamentos, SystemData } from '@/data/siemensEquipment';
@@ -282,17 +281,6 @@ export const MaritimeDashboard = () => {
           <div className="text-center mb-6">
             <div className="flex items-center justify-center mb-4">
               <img src="assets/supply-marine-hvac-logo.png" alt="Supply Marine" className="h-20 max-w-full object-contain" />
-            </div>
-            <div className="flex justify-center">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => window.location.hash = '#/admin'}
-                className="text-xs"
-              >
-                <Settings className="h-3 w-3 mr-1" />
-                Admin
-              </Button>
             </div>
           </div>
           
