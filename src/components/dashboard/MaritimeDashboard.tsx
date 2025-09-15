@@ -13,11 +13,12 @@ import maritimeHero from '@/assets/maritime-hero.jpg';
 import maritimeIcon from '@/assets/maritime-icon.png';
 import { siemensEquipmentData, siemensSystemsData, getTiposSistema, getTotalEquipamentos, SystemData } from '@/data/siemensEquipment';
 import { modecEquipmentData, modecSystemsData, getTiposSistemaModec, getTotalEquipamentosModec } from '@/data/modecEquipment';
-type ViewLevel = 'overview' | 'cliente' | 'sistema' | 'sistemaDetail';
+type ViewLevel = 'overview' | 'sistemas' | 'unidade' | 'sistema' | 'sistemaDetail';
 
 interface NavigationState {
   level: ViewLevel;
   selectedCliente?: string;
+  selectedUnidade?: string;
   selectedSistema?: string;
   selectedSystemData?: SystemData;
 }
@@ -106,9 +107,17 @@ export const MaritimeDashboard = () => {
     const items = [];
     
     if (navigation.selectedCliente) {
+      const clienteLevel: ViewLevel = navigation.selectedCliente === 'Modec' ? 'unidade' : 'sistemas';
       items.push({
         label: navigation.selectedCliente,
-        onClick: () => handleNavigationChange({ level: 'cliente', selectedCliente: navigation.selectedCliente })
+        onClick: () => handleNavigationChange({ level: clienteLevel, selectedCliente: navigation.selectedCliente })
+      });
+    }
+
+    if (navigation.selectedUnidade) {
+      items.push({
+        label: navigation.selectedUnidade,
+        onClick: () => handleNavigationChange({ level: 'sistemas', selectedCliente: navigation.selectedCliente, selectedUnidade: navigation.selectedUnidade })
       });
     }
     
@@ -129,8 +138,11 @@ export const MaritimeDashboard = () => {
   const handleNavigationChange = (newNavigation: NavigationState) => {
     setNavigation(newNavigation);
     // Clear relevant search terms when navigating
-    if (newNavigation.level === 'cliente') {
+    if (newNavigation.level === 'sistemas') {
       setSearchTerms(prev => ({ ...prev, sistemas: '', tiposEquipamento: '', locais: '', atendimentos: '' }));
+    }
+    if (newNavigation.level === 'unidade') {
+      setSearchTerms(prev => ({ ...prev, unidades: '', sistemas: '', tiposEquipamento: '', locais: '', atendimentos: '' }));
     }
   };
 
@@ -153,7 +165,7 @@ export const MaritimeDashboard = () => {
                   title="Siemens"
                   icon={<Users className="h-5 w-5" />}
                   badge={`${totalSistemasSiemens} sistemas`}
-                  onClick={() => handleNavigationChange({ level: 'cliente', selectedCliente: 'Siemens' })}
+                  onClick={() => handleNavigationChange({ level: 'sistemas', selectedCliente: 'Siemens' })}
                   metrics={[
                     { label: 'Sistemas', value: totalSistemasSiemens },
                     { label: 'Equipamentos', value: totalEquipamentosSiemens }
@@ -163,10 +175,9 @@ export const MaritimeDashboard = () => {
                 <InteractiveCard
                   key="Modec"
                   title="Modec"
-                  subtitle="FPSO Bacalhau"
                   icon={<Ship className="h-5 w-5" />}
                   badge={`${totalSistemasModec} sistemas`}
-                  onClick={() => handleNavigationChange({ level: 'cliente', selectedCliente: 'Modec' })}
+                  onClick={() => handleNavigationChange({ level: 'unidade', selectedCliente: 'Modec' })}
                   metrics={[
                     { label: 'Sistemas', value: totalSistemasModec },
                     { label: 'Equipamentos', value: totalEquipamentosModec }
@@ -180,7 +191,43 @@ export const MaritimeDashboard = () => {
     );
   };
 
-  const renderCliente = () => {
+  const renderUnidadeSelection = () => {
+    if (!navigation.selectedCliente) return null;
+
+    // TODO: Make this dynamic based on the client
+    const unidades = ['FPSO Bacalhau'];
+    const totalUnidades = unidades.length;
+
+    return (
+      <Card className="shadow-card border-0">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Ship className="h-5 w-5 text-primary" />
+            Unidades - {navigation.selectedCliente} ({totalUnidades})
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {unidades.map(unidade => (
+              <InteractiveCard
+                key={unidade}
+                title={unidade}
+                icon={<Anchor className="h-5 w-5" />}
+                onClick={() => handleNavigationChange({
+                  level: 'sistemas',
+                  selectedCliente: navigation.selectedCliente,
+                  selectedUnidade: unidade
+                })}
+                gradient="bg-gradient-ocean"
+              />
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    );
+  };
+
+  const renderSistemas = () => {
     if (!navigation.selectedCliente) return null;
 
     let filteredSistemas;
@@ -200,7 +247,7 @@ export const MaritimeDashboard = () => {
         sistema.tipo.toLowerCase().includes(searchTerms.sistemas.toLowerCase())
       );
       totalSistemasCliente = modecSystemsData.length;
-      clienteTitle = "Sistemas - Modec (FPSO Bacalhau)";
+      clienteTitle = `Sistemas - ${navigation.selectedUnidade}`;
     } else {
       return null;
     }
@@ -231,6 +278,7 @@ export const MaritimeDashboard = () => {
                   handleNavigationChange({
                     level: 'sistemaDetail',
                     selectedCliente: navigation.selectedCliente,
+                    selectedUnidade: navigation.selectedUnidade,
                     selectedSistema: sistema.nome,
                     selectedSystemData: sistema,
                   })
@@ -258,8 +306,10 @@ export const MaritimeDashboard = () => {
     switch (navigation.level) {
       case 'overview':
         return renderOverview();
-      case 'cliente':
-        return renderCliente();
+      case 'unidade':
+        return renderUnidadeSelection();
+      case 'sistemas':
+        return renderSistemas();
       case 'sistemaDetail':
         return renderSystemDetail();
       default:
