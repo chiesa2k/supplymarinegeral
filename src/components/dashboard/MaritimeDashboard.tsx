@@ -13,6 +13,7 @@ import maritimeHero from '@/assets/maritime-hero.jpg';
 import maritimeIcon from '@/assets/maritime-icon.png';
 import { siemensEquipmentData, siemensSystemsData, getTiposSistema, getTotalEquipamentos, SystemData } from '@/data/siemensEquipment';
 import { modecEquipmentData, modecSystemsData, getTiposSistemaModec, getTotalEquipamentosModec } from '@/data/modecEquipment';
+import { fluminenseSystemsData, getTotalEquipamentosFluminense } from '@/data/fluminenseEquipment';
 type ViewLevel = 'overview' | 'cliente' | 'unidade' | 'sistema' | 'sistemaDetail';
 
 interface NavigationState {
@@ -97,9 +98,14 @@ export const MaritimeDashboard = () => {
   // Calcular métricas totais
   const totalSistemasSiemens = siemensSystemsData.length;
   const totalEquipamentosSiemens = getTotalEquipamentos();
-  const totalSistemasModec = modecSystemsData.length;
-  const totalEquipamentosModec = getTotalEquipamentosModec();
+  const totalSistemasBacalhau = modecSystemsData.length;
+  const totalEquipamentosBacalhau = getTotalEquipamentosModec();
+  const totalSistemasFluminense = fluminenseSystemsData.length;
+  const totalEquipamentosFluminense = getTotalEquipamentosFluminense();
   
+  const totalSistemasModec = totalSistemasBacalhau + totalSistemasFluminense;
+  const totalEquipamentosModec = totalEquipamentosBacalhau + totalEquipamentosFluminense;
+
   const totalSistemas = totalSistemasSiemens + totalSistemasModec;
   const totalEquipamentos = totalEquipamentosSiemens + totalEquipamentosModec;
 
@@ -116,7 +122,7 @@ export const MaritimeDashboard = () => {
     if (navigation.selectedUnidade) {
       items.push({
         label: navigation.selectedUnidade,
-        onClick: () => handleNavigationChange({ level: 'cliente', selectedCliente: navigation.selectedCliente, selectedUnidade: navigation.selectedUnidade })
+        onClick: () => handleNavigationChange({ level: 'unidade', selectedCliente: navigation.selectedCliente })
       });
     }
     
@@ -171,7 +177,6 @@ export const MaritimeDashboard = () => {
                 <InteractiveCard
                   key="Modec"
                   title="Modec"
-                  subtitle="FPSO Bacalhau"
                   icon={<Ship className="h-5 w-5" />}
                   badge={`${totalSistemasModec} sistemas`}
                   onClick={() => handleNavigationChange({ level: 'unidade', selectedCliente: 'Modec' })}
@@ -191,8 +196,10 @@ export const MaritimeDashboard = () => {
   const renderUnidades = () => {
     if (!navigation.selectedCliente) return null;
 
-    const unidades = navigation.selectedCliente === 'Modec' ? ['FPSO Bacalhau'] : [];
-    const totalSistemasCliente = navigation.selectedCliente === 'Modec' ? totalSistemasModec : totalSistemasSiemens;
+    const unidades = [
+      { name: 'FPSO Bacalhau', sistemas: totalSistemasBacalhau, equipamentos: totalEquipamentosBacalhau },
+      { name: 'FPSO Fluminense', sistemas: totalSistemasFluminense, equipamentos: totalEquipamentosFluminense },
+    ];
 
     return (
       <Card className="shadow-card border-0">
@@ -206,20 +213,20 @@ export const MaritimeDashboard = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {unidades.map((unidade) => (
               <InteractiveCard
-                key={unidade}
-                title={unidade}
+                key={unidade.name}
+                title={unidade.name}
                 icon={<Anchor className="h-5 w-5" />}
-                badge={`${totalSistemasCliente} sistemas`}
+                badge={`${unidade.sistemas} sistemas`}
                 onClick={() =>
                   handleNavigationChange({
                     level: 'cliente',
                     selectedCliente: navigation.selectedCliente,
-                    selectedUnidade: unidade,
+                    selectedUnidade: unidade.name,
                   })
                 }
                 metrics={[
-                  { label: 'Sistemas', value: totalSistemasCliente },
-                  { label: 'Equipamentos', value: getTotalEquipamentosModec() },
+                  { label: 'Sistemas', value: unidade.sistemas },
+                  { label: 'Equipamentos', value: unidade.equipamentos },
                 ]}
                 gradient="bg-gradient-ocean"
               />
@@ -245,12 +252,13 @@ export const MaritimeDashboard = () => {
       totalSistemasCliente = siemensSystemsData.length;
       clienteTitle = "Sistemas - Siemens";
     } else if (navigation.selectedCliente === 'Modec') {
-      filteredSistemas = modecSystemsData.filter((sistema) =>
+      const systemData = navigation.selectedUnidade === 'FPSO Fluminense' ? fluminenseSystemsData : modecSystemsData;
+      filteredSistemas = systemData.filter((sistema) =>
         sistema.nome.toLowerCase().includes(searchTerms.sistemas.toLowerCase()) ||
         sistema.tipo.toLowerCase().includes(searchTerms.sistemas.toLowerCase())
       );
-      totalSistemasCliente = modecSystemsData.length;
-      clienteTitle = "Sistemas - Modec (FPSO Bacalhau)";
+      totalSistemasCliente = systemData.length;
+      clienteTitle = `Sistemas - ${navigation.selectedUnidade}`;
     } else {
       return null;
     }
