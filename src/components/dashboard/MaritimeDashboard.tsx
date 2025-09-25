@@ -17,6 +17,7 @@ import { mv18SystemsData, getTotalEquipamentosMv18 } from '@/data/mv18Equipment'
 import { mv20SystemsData, getTotalEquipamentosMv20 } from '@/data/mv20Equipment';
 import { mv22SystemsData, getTotalEquipamentosMv22 } from '@/data/mv22Equipment';
 import { mv23SystemsData, getTotalEquipamentosMv23 } from '@/data/mv23Equipment';
+import { mv26SystemsData, getTotalEquipamentosMv26 } from '@/data/mv26Equipment';
 type ViewLevel = 'overview' | 'cliente' | 'unidade' | 'sistema' | 'sistemaDetail';
 
 interface NavigationState {
@@ -111,9 +112,11 @@ export const MaritimeDashboard = () => {
   const totalEquipamentosMv22 = getTotalEquipamentosMv22();
   const totalSistemasMv23 = mv23SystemsData.length;
   const totalEquipamentosMv23 = getTotalEquipamentosMv23();
+  const totalSistemasMv26 = mv26SystemsData.length;
+  const totalEquipamentosMv26 = getTotalEquipamentosMv26();
   
-  const totalSistemasModec = totalSistemasBacalhau + totalSistemasMv18 + totalSistemasMv20 + totalSistemasMv22 + totalSistemasMv23;
-  const totalEquipamentosModec = totalEquipamentosBacalhau + totalEquipamentosMv18 + totalEquipamentosMv20 + totalEquipamentosMv22 + totalEquipamentosMv23;
+  const totalSistemasModec = totalSistemasBacalhau + totalSistemasMv18 + totalSistemasMv20 + totalSistemasMv22 + totalSistemasMv23 + totalSistemasMv26;
+  const totalEquipamentosModec = totalEquipamentosBacalhau + totalEquipamentosMv18 + totalEquipamentosMv20 + totalEquipamentosMv22 + totalEquipamentosMv23 + totalEquipamentosMv26;
 
   const totalSistemas = totalSistemasSiemens + totalSistemasModec;
   const totalEquipamentos = totalEquipamentosSiemens + totalEquipamentosModec;
@@ -205,7 +208,7 @@ export const MaritimeDashboard = () => {
   const renderUnidades = () => {
     if (!navigation.selectedCliente) return null;
 
-    const novasUnidadesNomes = ['MV26', 'MV29', 'MV30', 'MV31'];
+    const novasUnidadesNomes = ['MV29', 'MV30', 'MV31'];
     const novasUnidades = novasUnidadesNomes.map(name => ({ name, sistemas: 0, equipamentos: 0 }));
 
     const unidades = [
@@ -214,6 +217,7 @@ export const MaritimeDashboard = () => {
       { name: 'MV20', sistemas: totalSistemasMv20, equipamentos: totalEquipamentosMv20 },
       { name: 'MV22', sistemas: totalSistemasMv22, equipamentos: totalEquipamentosMv22 },
       { name: 'MV23', sistemas: totalSistemasMv23, equipamentos: totalEquipamentosMv23 },
+      { name: 'MV26', sistemas: totalSistemasMv26, equipamentos: totalEquipamentosMv26 },
       ...novasUnidades,
     ];
 
@@ -279,6 +283,8 @@ export const MaritimeDashboard = () => {
         systemData = mv22SystemsData;
       } else if (navigation.selectedUnidade === 'MV23') {
         systemData = mv23SystemsData;
+      } else if (navigation.selectedUnidade === 'MV26') {
+        systemData = mv26SystemsData;
       }
 
       filteredSistemas = systemData.filter((sistema) =>
