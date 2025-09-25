@@ -14,6 +14,7 @@ import maritimeIcon from '@/assets/maritime-icon.png';
 import { siemensEquipmentData, siemensSystemsData, getTiposSistema, getTotalEquipamentos, SystemData } from '@/data/siemensEquipment';
 import { modecEquipmentData, modecSystemsData, getTiposSistemaModec, getTotalEquipamentosModec } from '@/data/modecEquipment';
 import { mv18SystemsData, getTotalEquipamentosMv18 } from '@/data/mv18Equipment';
+import { mv20SystemsData, getTotalEquipamentosMv20 } from '@/data/mv20Equipment';
 type ViewLevel = 'overview' | 'cliente' | 'unidade' | 'sistema' | 'sistemaDetail';
 
 interface NavigationState {
@@ -102,9 +103,11 @@ export const MaritimeDashboard = () => {
   const totalEquipamentosBacalhau = getTotalEquipamentosModec();
   const totalSistemasMv18 = mv18SystemsData.length;
   const totalEquipamentosMv18 = getTotalEquipamentosMv18();
+  const totalSistemasMv20 = mv20SystemsData.length;
+  const totalEquipamentosMv20 = getTotalEquipamentosMv20();
   
-  const totalSistemasModec = totalSistemasBacalhau + totalSistemasMv18;
-  const totalEquipamentosModec = totalEquipamentosBacalhau + totalEquipamentosMv18;
+  const totalSistemasModec = totalSistemasBacalhau + totalSistemasMv18 + totalSistemasMv20;
+  const totalEquipamentosModec = totalEquipamentosBacalhau + totalEquipamentosMv18 + totalEquipamentosMv20;
 
   const totalSistemas = totalSistemasSiemens + totalSistemasModec;
   const totalEquipamentos = totalEquipamentosSiemens + totalEquipamentosModec;
@@ -196,12 +199,13 @@ export const MaritimeDashboard = () => {
   const renderUnidades = () => {
     if (!navigation.selectedCliente) return null;
 
-    const novasUnidadesNomes = ['MV20', 'MV22', 'MV23', 'MV26', 'MV29', 'MV30', 'MV31'];
+    const novasUnidadesNomes = ['MV22', 'MV23', 'MV26', 'MV29', 'MV30', 'MV31'];
     const novasUnidades = novasUnidadesNomes.map(name => ({ name, sistemas: 0, equipamentos: 0 }));
 
     const unidades = [
       { name: 'FPSO Bacalhau', sistemas: totalSistemasBacalhau, equipamentos: totalEquipamentosBacalhau },
       { name: 'MV18', sistemas: totalSistemasMv18, equipamentos: totalEquipamentosMv18 },
+      { name: 'MV20', sistemas: totalSistemasMv20, equipamentos: totalEquipamentosMv20 },
       ...novasUnidades,
     ];
 
@@ -261,6 +265,8 @@ export const MaritimeDashboard = () => {
         systemData = modecSystemsData;
       } else if (navigation.selectedUnidade === 'MV18') {
         systemData = mv18SystemsData;
+      } else if (navigation.selectedUnidade === 'MV20') {
+        systemData = mv20SystemsData;
       }
 
       filteredSistemas = systemData.filter((sistema) =>
