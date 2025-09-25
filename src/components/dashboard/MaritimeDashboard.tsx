@@ -196,9 +196,13 @@ export const MaritimeDashboard = () => {
   const renderUnidades = () => {
     if (!navigation.selectedCliente) return null;
 
+    const novasUnidadesNomes = ['MV15', 'MV18', 'MV20', 'MV22', 'MV23', 'MV24', 'MV26', 'MV27', 'MV29', 'MV30', 'MV31'];
+    const novasUnidades = novasUnidadesNomes.map(name => ({ name, sistemas: 0, equipamentos: 0 }));
+
     const unidades = [
       { name: 'FPSO Bacalhau', sistemas: totalSistemasBacalhau, equipamentos: totalEquipamentosBacalhau },
       { name: 'FPSO Fluminense', sistemas: totalSistemasFluminense, equipamentos: totalEquipamentosFluminense },
+      ...novasUnidades,
     ];
 
     return (
@@ -252,7 +256,13 @@ export const MaritimeDashboard = () => {
       totalSistemasCliente = siemensSystemsData.length;
       clienteTitle = "Sistemas - Siemens";
     } else if (navigation.selectedCliente === 'Modec') {
-      const systemData = navigation.selectedUnidade === 'FPSO Fluminense' ? fluminenseSystemsData : modecSystemsData;
+      let systemData: SystemData[] = [];
+      if (navigation.selectedUnidade === 'FPSO Bacalhau') {
+        systemData = modecSystemsData;
+      } else if (navigation.selectedUnidade === 'FPSO Fluminense') {
+        systemData = fluminenseSystemsData;
+      }
+
       filteredSistemas = systemData.filter((sistema) =>
         sistema.nome.toLowerCase().includes(searchTerms.sistemas.toLowerCase()) ||
         sistema.tipo.toLowerCase().includes(searchTerms.sistemas.toLowerCase())
