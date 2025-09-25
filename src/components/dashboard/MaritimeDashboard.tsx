@@ -13,11 +13,12 @@ import maritimeHero from '@/assets/maritime-hero.jpg';
 import maritimeIcon from '@/assets/maritime-icon.png';
 import { siemensEquipmentData, siemensSystemsData, getTiposSistema, getTotalEquipamentos, SystemData } from '@/data/siemensEquipment';
 import { modecEquipmentData, modecSystemsData, getTiposSistemaModec, getTotalEquipamentosModec } from '@/data/modecEquipment';
-type ViewLevel = 'overview' | 'cliente' | 'sistema' | 'sistemaDetail';
+type ViewLevel = 'overview' | 'cliente' | 'unidade' | 'sistema' | 'sistemaDetail';
 
 interface NavigationState {
   level: ViewLevel;
   selectedCliente?: string;
+  selectedUnidade?: string;
   selectedSistema?: string;
   selectedSystemData?: SystemData;
 }
@@ -108,7 +109,14 @@ export const MaritimeDashboard = () => {
     if (navigation.selectedCliente) {
       items.push({
         label: navigation.selectedCliente,
-        onClick: () => handleNavigationChange({ level: 'cliente', selectedCliente: navigation.selectedCliente })
+        onClick: () => handleNavigationChange({ level: 'unidade', selectedCliente: navigation.selectedCliente })
+      });
+    }
+
+    if (navigation.selectedUnidade) {
+      items.push({
+        label: navigation.selectedUnidade,
+        onClick: () => handleNavigationChange({ level: 'cliente', selectedCliente: navigation.selectedCliente, selectedUnidade: navigation.selectedUnidade })
       });
     }
     
@@ -166,7 +174,7 @@ export const MaritimeDashboard = () => {
                   subtitle="FPSO Bacalhau"
                   icon={<Ship className="h-5 w-5" />}
                   badge={`${totalSistemasModec} sistemas`}
-                  onClick={() => handleNavigationChange({ level: 'cliente', selectedCliente: 'Modec' })}
+                  onClick={() => handleNavigationChange({ level: 'unidade', selectedCliente: 'Modec' })}
                   metrics={[
                     { label: 'Sistemas', value: totalSistemasModec },
                     { label: 'Equipamentos', value: totalEquipamentosModec }
@@ -177,6 +185,48 @@ export const MaritimeDashboard = () => {
             </CardContent>
           </Card>
       </div>
+    );
+  };
+
+  const renderUnidades = () => {
+    if (!navigation.selectedCliente) return null;
+
+    const unidades = navigation.selectedCliente === 'Modec' ? ['FPSO Bacalhau'] : [];
+    const totalSistemasCliente = navigation.selectedCliente === 'Modec' ? totalSistemasModec : totalSistemasSiemens;
+
+    return (
+      <Card className="shadow-card border-0">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Ship className="h-5 w-5 text-primary" />
+            Unidades - {navigation.selectedCliente}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {unidades.map((unidade) => (
+              <InteractiveCard
+                key={unidade}
+                title={unidade}
+                icon={<Anchor className="h-5 w-5" />}
+                badge={`${totalSistemasCliente} sistemas`}
+                onClick={() =>
+                  handleNavigationChange({
+                    level: 'cliente',
+                    selectedCliente: navigation.selectedCliente,
+                    selectedUnidade: unidade,
+                  })
+                }
+                metrics={[
+                  { label: 'Sistemas', value: totalSistemasCliente },
+                  { label: 'Equipamentos', value: getTotalEquipamentosModec() },
+                ]}
+                gradient="bg-gradient-ocean"
+              />
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     );
   };
 
@@ -258,6 +308,8 @@ export const MaritimeDashboard = () => {
     switch (navigation.level) {
       case 'overview':
         return renderOverview();
+      case 'unidade':
+        return renderUnidades();
       case 'cliente':
         return renderCliente();
       case 'sistemaDetail':
