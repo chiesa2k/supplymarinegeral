@@ -196,7 +196,7 @@ export const MaritimeDashboard = () => {
   const renderUnidades = () => {
     if (!navigation.selectedCliente) return null;
 
-    const novasUnidadesNomes = ['MV20', 'MV22', 'MV23', 'MV26', 'MV27', 'MV29', 'MV30', 'MV31'];
+    const novasUnidadesNomes = ['MV20', 'MV22', 'MV23', 'MV26', 'MV29', 'MV30', 'MV31'];
     const novasUnidades = novasUnidadesNomes.map(name => ({ name, sistemas: 0, equipamentos: 0 }));
 
     const unidades = [
