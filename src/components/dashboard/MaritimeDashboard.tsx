@@ -22,6 +22,7 @@ import { mv29SystemsData, getTotalEquipamentosMv29 } from '@/data/mv29Equipment'
 import { mv30SystemsData, getTotalEquipamentosMv30 } from '@/data/mv30Equipment';
 import { mv31SystemsData, getTotalEquipamentosMv31 } from '@/data/mv31Equipment';
 import { prioSystemsData, getTotalEquipamentosPrio } from '@/data/prioEquipment';
+import { fpsoBravoSystemsData, getTotalEquipamentosFpsoBravo } from '@/data/fpsoBravoEquipment';
 type ViewLevel = 'overview' | 'cliente' | 'unidade' | 'sistema' | 'sistemaDetail';
 
 interface NavigationState {
@@ -126,12 +127,14 @@ export const MaritimeDashboard = () => {
   const totalEquipamentosMv31 = getTotalEquipamentosMv31();
   const totalSistemasPrio = prioSystemsData.length;
   const totalEquipamentosPrio = getTotalEquipamentosPrio();
+  const totalSistemasFpsoBravo = fpsoBravoSystemsData.length;
+  const totalEquipamentosFpsoBravo = getTotalEquipamentosFpsoBravo();
   
   const totalSistemasModec = totalSistemasBacalhau + totalSistemasMv18 + totalSistemasMv20 + totalSistemasMv22 + totalSistemasMv23 + totalSistemasMv26 + totalSistemasMv29 + totalSistemasMv30 + totalSistemasMv31;
   const totalEquipamentosModec = totalEquipamentosBacalhau + totalEquipamentosMv18 + totalEquipamentosMv20 + totalEquipamentosMv22 + totalEquipamentosMv23 + totalEquipamentosMv26 + totalEquipamentosMv29 + totalEquipamentosMv30 + totalEquipamentosMv31;
 
-  const totalSistemas = totalSistemasSiemens + totalSistemasModec + totalSistemasPrio;
-  const totalEquipamentos = totalEquipamentosSiemens + totalEquipamentosModec + totalEquipamentosPrio;
+  const totalSistemas = totalSistemasSiemens + totalSistemasModec + totalSistemasPrio + totalSistemasFpsoBravo;
+  const totalEquipamentos = totalEquipamentosSiemens + totalEquipamentosModec + totalEquipamentosPrio + totalEquipamentosFpsoBravo;
 
   const getBreadcrumbItems = () => {
     const items = [];
@@ -252,6 +255,7 @@ export const MaritimeDashboard = () => {
     } else if (navigation.selectedCliente === 'Prio') {
       unidades = [
         { name: 'Polvo A', sistemas: totalSistemasPrio, equipamentos: totalEquipamentosPrio },
+        { name: 'FPSO Bravo', sistemas: totalSistemasFpsoBravo, equipamentos: totalEquipamentosFpsoBravo },
       ];
     }
 
@@ -334,7 +338,13 @@ export const MaritimeDashboard = () => {
       totalSistemasCliente = systemData.length;
       clienteTitle = `Sistemas - ${navigation.selectedUnidade}`;
     } else if (navigation.selectedCliente === 'Prio') {
-        const systemData = prioSystemsData;
+        let systemData: SystemData[] = [];
+        if (navigation.selectedUnidade === 'Polvo A') {
+            systemData = prioSystemsData;
+        } else if (navigation.selectedUnidade === 'FPSO Bravo') {
+            systemData = fpsoBravoSystemsData;
+        }
+
         filteredSistemas = systemData.filter((sistema) =>
             sistema.nome.toLowerCase().includes(searchTerms.sistemas.toLowerCase()) ||
             sistema.tipo.toLowerCase().includes(searchTerms.sistemas.toLowerCase())
