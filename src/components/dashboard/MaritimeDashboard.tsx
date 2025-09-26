@@ -21,6 +21,7 @@ import { mv26SystemsData, getTotalEquipamentosMv26 } from '@/data/mv26Equipment'
 import { mv29SystemsData, getTotalEquipamentosMv29 } from '@/data/mv29Equipment';
 import { mv30SystemsData, getTotalEquipamentosMv30 } from '@/data/mv30Equipment';
 import { mv31SystemsData, getTotalEquipamentosMv31 } from '@/data/mv31Equipment';
+import { prioSystemsData, getTotalEquipamentosPrio } from '@/data/prioEquipment';
 type ViewLevel = 'overview' | 'cliente' | 'unidade' | 'sistema' | 'sistemaDetail';
 
 interface NavigationState {
@@ -123,12 +124,14 @@ export const MaritimeDashboard = () => {
   const totalEquipamentosMv30 = getTotalEquipamentosMv30();
   const totalSistemasMv31 = mv31SystemsData.length;
   const totalEquipamentosMv31 = getTotalEquipamentosMv31();
+  const totalSistemasPrio = prioSystemsData.length;
+  const totalEquipamentosPrio = getTotalEquipamentosPrio();
   
   const totalSistemasModec = totalSistemasBacalhau + totalSistemasMv18 + totalSistemasMv20 + totalSistemasMv22 + totalSistemasMv23 + totalSistemasMv26 + totalSistemasMv29 + totalSistemasMv30 + totalSistemasMv31;
   const totalEquipamentosModec = totalEquipamentosBacalhau + totalEquipamentosMv18 + totalEquipamentosMv20 + totalEquipamentosMv22 + totalEquipamentosMv23 + totalEquipamentosMv26 + totalEquipamentosMv29 + totalEquipamentosMv30 + totalEquipamentosMv31;
 
-  const totalSistemas = totalSistemasSiemens + totalSistemasModec;
-  const totalEquipamentos = totalEquipamentosSiemens + totalEquipamentosModec;
+  const totalSistemas = totalSistemasSiemens + totalSistemasModec + totalSistemasPrio;
+  const totalEquipamentos = totalEquipamentosSiemens + totalEquipamentosModec + totalEquipamentosPrio;
 
   const getBreadcrumbItems = () => {
     const items = [];
@@ -178,11 +181,23 @@ export const MaritimeDashboard = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Users className="h-5 w-5 text-primary" />
-                Clientes (2)
+                Clientes (3)
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <InteractiveCard
+                  key="Prio"
+                  title="Prio"
+                  icon={<Users className="h-5 w-5" />}
+                  badge={`${totalSistemasPrio} sistemas`}
+                  onClick={() => handleNavigationChange({ level: 'unidade', selectedCliente: 'Prio' })}
+                  metrics={[
+                    { label: 'Sistemas', value: totalSistemasPrio },
+                    { label: 'Equipamentos', value: totalEquipamentosPrio }
+                  ]}
+                  gradient="bg-gradient-ocean"
+                />
                 <InteractiveCard
                   key="Siemens"
                   title="Siemens"
@@ -217,21 +232,28 @@ export const MaritimeDashboard = () => {
   const renderUnidades = () => {
     if (!navigation.selectedCliente) return null;
 
-    const novasUnidadesNomes: string[] = [];
-    const novasUnidades = novasUnidadesNomes.map(name => ({ name, sistemas: 0, equipamentos: 0 }));
+    let unidades: { name: string; sistemas: number; equipamentos: number; }[] = [];
 
-    const unidades = [
-      { name: 'FPSO Bacalhau', sistemas: totalSistemasBacalhau, equipamentos: totalEquipamentosBacalhau },
-      { name: 'MV18', sistemas: totalSistemasMv18, equipamentos: totalEquipamentosMv18 },
-      { name: 'MV20', sistemas: totalSistemasMv20, equipamentos: totalEquipamentosMv20 },
-      { name: 'MV22', sistemas: totalSistemasMv22, equipamentos: totalEquipamentosMv22 },
-      { name: 'MV23', sistemas: totalSistemasMv23, equipamentos: totalEquipamentosMv23 },
-      { name: 'MV26', sistemas: totalSistemasMv26, equipamentos: totalEquipamentosMv26 },
-      { name: 'MV29', sistemas: totalSistemasMv29, equipamentos: totalEquipamentosMv29 },
-      { name: 'MV30', sistemas: totalSistemasMv30, equipamentos: totalEquipamentosMv30 },
-      { name: 'MV31', sistemas: totalSistemasMv31, equipamentos: totalEquipamentosMv31 },
-      ...novasUnidades,
-    ];
+    if (navigation.selectedCliente === 'Modec') {
+      const novasUnidadesNomes: string[] = [];
+      const novasUnidades = novasUnidadesNomes.map(name => ({ name, sistemas: 0, equipamentos: 0 }));
+      unidades = [
+        { name: 'FPSO Bacalhau', sistemas: totalSistemasBacalhau, equipamentos: totalEquipamentosBacalhau },
+        { name: 'MV18', sistemas: totalSistemasMv18, equipamentos: totalEquipamentosMv18 },
+        { name: 'MV20', sistemas: totalSistemasMv20, equipamentos: totalEquipamentosMv20 },
+        { name: 'MV22', sistemas: totalSistemasMv22, equipamentos: totalEquipamentosMv22 },
+        { name: 'MV23', sistemas: totalSistemasMv23, equipamentos: totalEquipamentosMv23 },
+        { name: 'MV26', sistemas: totalSistemasMv26, equipamentos: totalEquipamentosMv26 },
+        { name: 'MV29', sistemas: totalSistemasMv29, equipamentos: totalEquipamentosMv29 },
+        { name: 'MV30', sistemas: totalSistemasMv30, equipamentos: totalEquipamentosMv30 },
+        { name: 'MV31', sistemas: totalSistemasMv31, equipamentos: totalEquipamentosMv31 },
+        ...novasUnidades,
+      ];
+    } else if (navigation.selectedCliente === 'Prio') {
+      unidades = [
+        { name: 'Polvo A', sistemas: totalSistemasPrio, equipamentos: totalEquipamentosPrio },
+      ];
+    }
 
     return (
       <Card className="shadow-card border-0">
@@ -311,6 +333,14 @@ export const MaritimeDashboard = () => {
       );
       totalSistemasCliente = systemData.length;
       clienteTitle = `Sistemas - ${navigation.selectedUnidade}`;
+    } else if (navigation.selectedCliente === 'Prio') {
+        const systemData = prioSystemsData;
+        filteredSistemas = systemData.filter((sistema) =>
+            sistema.nome.toLowerCase().includes(searchTerms.sistemas.toLowerCase()) ||
+            sistema.tipo.toLowerCase().includes(searchTerms.sistemas.toLowerCase())
+        );
+        totalSistemasCliente = systemData.length;
+        clienteTitle = `Sistemas - ${navigation.selectedUnidade}`;
     } else {
       return null;
     }
