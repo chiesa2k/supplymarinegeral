@@ -24,6 +24,7 @@ import { mv31SystemsData, getTotalEquipamentosMv31 } from '@/data/mv31Equipment'
 import { prioSystemsData, getTotalEquipamentosPrio } from '@/data/prioEquipment';
 import { fpsoBravoSystemsData, getTotalEquipamentosFpsoBravo } from '@/data/fpsoBravoEquipment';
 import { fpsoFradeSystemsData, getTotalEquipamentosFpsoFrade } from '@/data/fpsoFradeEquipment';
+import { hunterQueenSystemsData, getTotalEquipamentosHunterQueen } from '@/data/hunterQueenEquipment';
 type ViewLevel = 'overview' | 'cliente' | 'unidade' | 'sistema' | 'sistemaDetail';
 
 interface NavigationState {
@@ -132,12 +133,14 @@ export const MaritimeDashboard = () => {
   const totalEquipamentosFpsoBravo = getTotalEquipamentosFpsoBravo();
   const totalSistemasFpsoFrade = fpsoFradeSystemsData.length;
   const totalEquipamentosFpsoFrade = getTotalEquipamentosFpsoFrade();
+  const totalSistemasHunterQueen = hunterQueenSystemsData.length;
+  const totalEquipamentosHunterQueen = getTotalEquipamentosHunterQueen();
   
   const totalSistemasModec = totalSistemasBacalhau + totalSistemasMv18 + totalSistemasMv20 + totalSistemasMv22 + totalSistemasMv23 + totalSistemasMv26 + totalSistemasMv29 + totalSistemasMv30 + totalSistemasMv31;
   const totalEquipamentosModec = totalEquipamentosBacalhau + totalEquipamentosMv18 + totalEquipamentosMv20 + totalEquipamentosMv22 + totalEquipamentosMv23 + totalEquipamentosMv26 + totalEquipamentosMv29 + totalEquipamentosMv30 + totalEquipamentosMv31;
 
-  const totalSistemas = totalSistemasSiemens + totalSistemasModec + totalSistemasPrio + totalSistemasFpsoBravo + totalSistemasFpsoFrade;
-  const totalEquipamentos = totalEquipamentosSiemens + totalEquipamentosModec + totalEquipamentosPrio + totalEquipamentosFpsoBravo + totalEquipamentosFpsoFrade;
+  const totalSistemas = totalSistemasSiemens + totalSistemasModec + totalSistemasPrio + totalSistemasFpsoBravo + totalSistemasFpsoFrade + totalSistemasHunterQueen;
+  const totalEquipamentos = totalEquipamentosSiemens + totalEquipamentosModec + totalEquipamentosPrio + totalEquipamentosFpsoBravo + totalEquipamentosFpsoFrade + totalEquipamentosHunterQueen;
 
   const getBreadcrumbItems = () => {
     const items = [];
@@ -260,6 +263,7 @@ export const MaritimeDashboard = () => {
         { name: 'Polvo A', sistemas: totalSistemasPrio, equipamentos: totalEquipamentosPrio },
         { name: 'FPSO Bravo', sistemas: totalSistemasFpsoBravo, equipamentos: totalEquipamentosFpsoBravo },
         { name: 'FPSO Frade', sistemas: totalSistemasFpsoFrade, equipamentos: totalEquipamentosFpsoFrade },
+        { name: 'Hunter Queen', sistemas: totalSistemasHunterQueen, equipamentos: totalEquipamentosHunterQueen },
       ];
     }
 
@@ -349,6 +353,8 @@ export const MaritimeDashboard = () => {
             systemData = fpsoBravoSystemsData;
         } else if (navigation.selectedUnidade === 'FPSO Frade') {
             systemData = fpsoFradeSystemsData;
+        } else if (navigation.selectedUnidade === 'Hunter Queen') {
+            systemData = hunterQueenSystemsData;
         }
 
         filteredSistemas = systemData.filter((sistema) =>
