@@ -190,11 +190,11 @@ export const MaritimeDashboard = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Users className="h-5 w-5 text-primary" />
-                Clientes (3)
+                Clientes (4)
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <InteractiveCard
                   key="Prio"
                   title="Prio"
@@ -231,6 +231,18 @@ export const MaritimeDashboard = () => {
                   ]}
                   gradient="bg-gradient-wave"
                 />
+                 <InteractiveCard
+                  key="SBM Offshore"
+                  title="SBM Offshore"
+                  icon={<Users className="h-5 w-5" />}
+                  badge={`0 sistemas`}
+                  onClick={() => handleNavigationChange({ level: 'unidade', selectedCliente: 'SBM Offshore' })}
+                  metrics={[
+                    { label: 'Sistemas', value: 0 },
+                    { label: 'Equipamentos', value: 0 }
+                  ]}
+                  gradient="bg-gradient-ocean"
+                />
               </div>
             </CardContent>
           </Card>
@@ -265,6 +277,8 @@ export const MaritimeDashboard = () => {
         { name: 'FPSO Frade', sistemas: totalSistemasFpsoFrade, equipamentos: totalEquipamentosFpsoFrade },
         { name: 'Hunter Queen', sistemas: totalSistemasHunterQueen, equipamentos: totalEquipamentosHunterQueen },
       ];
+    } else if (navigation.selectedCliente === 'SBM Offshore') {
+      unidades = [];
     }
 
     return (
